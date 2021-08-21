@@ -30,11 +30,7 @@ function freeProduct(price, fildPrice, condition) {
 }
 
 
-//total add
 
-function totalAdd() {
-    
-}
 
 // Extra cost 
 
@@ -76,54 +72,92 @@ function costProduct(price , fildPrice, condition) {
         document.getElementById('total').innerHTML = totalSsd;
     }
 }
-//////////////////////////////////////Total price 
-
+//////////////////////////////////////Total price////////////////////////////////// 
 function totalPrice() {
-    const regulerNumber = document.getElementById('regulerCost').innerText;
-    const regulerPrice = parseInt(regulerNumber);
-    const totalCost = regulerPrice.value + fildNumberPrice;
-    console.log(totalCost);
+    //Best Price
+    const bestPrice = document.getElementById('regulerCost').innerText;
+    const bestPriceNumber = parseInt(bestPrice);
+
+    //Memory cost
+    const memoryPrice = document.getElementById('extra-memory-cost').innerText;
+    const memoryPriceNumber = parseInt(memoryPrice);
+
+    //Storage Cost
+    const storagePrice = document.getElementById('extra-ssd-cost').innerText;
+    const storageNumber = parseInt(storagePrice);
+
+    //Delivery Charge 
+    const deliveryPrice = document.getElementById('extra-delivary-cost').innerText;
+    const deliveryNumber = parseInt(deliveryPrice);
+
+    //Total Price Sum
+    const TotalResult = bestPriceNumber + memoryPriceNumber + storageNumber + deliveryNumber;
+    document.getElementById('total').innerHTML = TotalResult;
+    document.getElementById('totalAmount').innerHTML = TotalResult;
+
+}
+
+
+//////////////////////////////////////Promo code////////////////////////////////// 
+
+function promoCode(inputText ,num) {
+    const promoInput = document.getElementById(inputText).value;
+    if (promoInput == num) {
+        const totalAmount = document.getElementById('total').innerText;
+        const totalNumber = parseInt(totalAmount);
+
+        const discountPrice = totalNumber / 100;
+        const discountNumber = discountPrice * 80;
+        const mround = Math.round(discountNumber);
+        document.getElementById('totalAmount').innerHTML = mround;
+        promoInput.value == "";
+    }
     
 }
 
 
 
+
 ///////////////////////////////////////EVENT//////////////////////////////////////////
 
-// Free memory- ssd- deliary //////////////////////////
+// Free memory- ssd- deliary //
     //memory
 document.getElementById('8gb-memory').addEventListener('click', function () {
-    freeProduct(0 , 'extra-memory', true);
+    freeProduct(0, 'extra-memory', true);
+    totalPrice();
 })
     //ssd
 document.getElementById('256gb-ssd').addEventListener('click', function () {
     freeProduct(0 , 'extra-ssd', false);
+    totalPrice();
 })
     //delivary
 document.getElementById('free-Delivery').addEventListener('click', function () {
-    freeProduct(0 , 'extra-delivary', 'del');
+    freeProduct(0, 'extra-delivary', 'del');
+    totalPrice();
 })
 
 
 
 
-
-
-//extra cost ($)////////////////////////////
+//extra cost ($)//
     
     //memory one device
 document.getElementById('16gb-memory').addEventListener('click', function () {
-    costProduct(180 , 'extra-memory', true)
+    costProduct(180, 'extra-memory', true);
+    totalPrice();
 })
 
     //ssd two device
 
 document.getElementById('512gb-ssd').addEventListener('click', function () {
     costProduct(100, 'extra-ssd', '512ssd');
+    totalPrice();
 })
 
 document.getElementById('1tb-ssd').addEventListener('click', function () {
     costProduct(180, 'extra-ssd', false);
+    totalPrice();
 })
 
 
@@ -131,8 +165,14 @@ document.getElementById('1tb-ssd').addEventListener('click', function () {
 
 document.getElementById('delivery-cost').addEventListener('click', function () {
     costProduct(20, 'extra-delivary', 'dCost');
+    totalPrice();
 })
 
 
-//Total price
 
+
+//promo code //
+
+document.getElementById('promo').addEventListener('click', function () {
+    promoCode('copun','stevekaku');
+})
